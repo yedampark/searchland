@@ -1,0 +1,122 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
+    <meta name="generator" content="Jekyll v4.1.1">
+    <title>Search Land - smart video search system</title>
+
+    <link rel="canonical" href="https://getbootstrap.com/docs/4.5/examples/album/">
+
+    <!-- Bootstrap core CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+    <style>
+      .bd-placeholder-img {
+        font-size: 1.125rem;
+        text-anchor: middle;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+      }
+
+      @media (min-width: 768px) {
+        .bd-placeholder-img-lg {
+          font-size: 3.5rem;
+        }
+      }
+    </style>
+    <!-- Custom styles for this template -->
+    <link href={{ url_for('static', filename='album.css') }} rel="stylesheet">
+  </head>
+  <body>
+<header>
+  <div class="navbar navbar-dark bg-dark shadow-sm">
+    <div class="container p-1 d-flex justify-content-between">
+      <a href="/" class="navbar-brand d-flex align-items-center">
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" aria-hidden="true" class="mr-2" viewBox="0 0 24 24" focusable="false"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>
+        <strong>Search Land</strong>
+      </a>
+      <form method="get" class="form-inline mt-md-0" >
+        <input id="nav_query" name="nav_query" class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search">
+        <button name="submit" value="nav_search" class="btn btn-primary btn-sm" type="submit">
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" class="m-1" viewBox="0 0 24 24" ><circle cx="10.5" cy="10.5" r="7.5"></circle><line x1="21" y1="21" x2="15.8" y2="15.8"></line></svg>
+        </button>
+      </form>
+    </div>
+  </div>
+</header>
+
+<main role="main">
+
+  <section class="jumbotron text-center">
+    <div class="container">
+      <h1>Search Land</h1>
+      <p class="lead text-muted">Search the video through its content and semantic information. <br>Search Land has many special features, including deep learning model that helps you find exactly what you are looking for.</p>
+      <form method="get">
+        <div class="input-group mb-3">
+          <input type="text" name="query" id="query" class="form-control" value="{{ request.args['query'] }}">
+        </div>
+        <p>
+          <button type="submit" name="submit" value="search" class="btn btn-primary my-2">Search</button>
+          <button type="submit" name="submit" value="upload" class="btn btn-secondary my-2">Upload</button>
+        </p>
+      </form>
+    </div>
+  </section>
+
+  <div class="album py-5 bg-light">
+    <div class="container">
+
+      <div class="row">
+        {% for post in posts %}
+        <div class="col-md-3">
+          <div class="card mb-4 shadow-sm">
+
+            <div class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice" focusable="false" role="img" aria-label="">
+              <title>Placeholder</title>
+              {% set title = post[1].split('.')[0] + "-Scene-001-01.jpg" %}
+              <img width="100%" height="100%" src="{{ url_for('static', filename=title) }}"> <!--img-thumbnail, .img-rounded, rounded-circle-->
+              <!--text x="50%" y="50%" fill="#eceeef" dy=".3em">{{title}}</text-->
+            </div>
+
+            <div class="card-body">
+              <p class="card-text">{{ post[1] }}</p>
+              <div class="d-flex justify-content-between align-items-center">
+
+                <form method="get">
+                  <div class="btn-group">
+                    <button type="submit" name="view" value="{{ post[0] }}" class="btn btn-sm btn-outline-secondary rounded px-3">View</button>
+                    <input type="hidden" name="search_word" value="{{ request.args['query'] }}">
+                  </div>
+                </form>
+
+              </div>
+            </div>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+
+</main>
+
+<footer class="text-muted">
+  <div class="container">
+    <p>Search Land</p>
+    <p>Designed and built by the BlueMarble team.</p>
+    <p>Department of IT Engineering, College of Engineering, Sookmyung Women's University.</p>
+  </div>
+</footer>
+
+<!-- Optional JavaScript -->
+<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
+</body>
+</html>
